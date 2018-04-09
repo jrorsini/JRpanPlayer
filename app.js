@@ -1,7 +1,6 @@
 const formidable = require('formidable');
 const express = require('express');
 const parser = require('subtitles-parser');
-const ffmpeg = require('fluent-ffmpeg');
 const cors = require('cors');
 const path = require('path');
 const app = express();
