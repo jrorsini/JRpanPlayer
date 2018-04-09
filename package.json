@@ -10,12 +10,13 @@
 		"start": "concurrently \"nodemon app.js\" \"webpack-dev-server\" "
 	},
 	"dependencies": {
-		"@babel/core": "^7.0.0-beta.42",
+		"@babel/core": "^7.0.0-beta.44",
 		"@babel/preset-env": "^7.0.0-beta.42",
 		"@babel/preset-react": "^7.0.0-beta.42",
-		"babel-core": "^6.26.0",
 		"babel-loader": "^7.1.4",
 		"concurrently": "^3.5.1",
+		"react": "^16.3.1",
+		"react-dom": "^16.3.1",
 		"subtitles-parser": "0.0.2",
 		"webpack": "^4.5.0",
 		"webpack-cli": "^2.0.14",
