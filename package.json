@@ -1,0 +1,17 @@
+{
+	"name": "JRpanPlayer",
+	"version": "1.0.0",
+	"main": "index.js",
+	"repository": "https://github.com/jrorsini/JRpanPlayer.git",
+	"author": "Jean-Roger <jeanroger.orsini@gmail.com>",
+	"license": "MIT",
+	"dependencies": {
+		"babel-core": "^6.26.0",
+		"babel-loader": "^7.1.4",
+		"concurrently": "^3.5.1",
+		"subtitles-parser": "0.0.2",
+		"webpack": "^4.5.0",
+		"webpack-cli": "^2.0.14",
+		"webpack-dev-server": "^3.1.3"
+	}
+}
