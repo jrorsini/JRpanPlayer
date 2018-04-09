@@ -5,7 +5,14 @@
 	"repository": "https://github.com/jrorsini/JRpanPlayer.git",
 	"author": "Jean-Roger <jeanroger.orsini@gmail.com>",
 	"license": "MIT",
+	"scripts": {
+		"build": "webpack",
+		"start": "concurrently \"nodemon app.js\" \"webpack-dev-server\" "
+	},
 	"dependencies": {
+		"@babel/core": "^7.0.0-beta.42",
+		"@babel/preset-env": "^7.0.0-beta.42",
+		"@babel/preset-react": "^7.0.0-beta.42",
 		"babel-core": "^6.26.0",
 		"babel-loader": "^7.1.4",
 		"concurrently": "^3.5.1",
