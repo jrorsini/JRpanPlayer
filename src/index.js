@@ -2,14 +2,14 @@
 /**
  * x Show subtitles.
  */
-// TODO
-
+// DONE
 /**
  * o/ get JSON array.
  */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import p from './promises.js';
 
 let _json = null;
 let tokenizer = null;
@@ -28,24 +28,6 @@ const part_of_speech = {
 	感動詞: 'interjection',
 	フィラー: 'filler'
 };
-
-const get_json_object = () =>
-	new Promise((resolve, reject) => {
-		const xmlhttp = new XMLHttpRequest();
-		xmlhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				resolve(JSON.parse(this.responseText));
-			}
-		};
-		xmlhttp.open('GET', 'subtls/sample.json', true);
-		xmlhttp.send();
-	});
-
-get_json_object()
-	.then(json => {
-		_json = json;
-	})
-	.catch(err => console.log(err));
 
 const videoPlayerElement = document.getElementById('videoPlayer');
 const subtitleElement = document.getElementById('subtitle');
@@ -73,20 +55,6 @@ const showSubtitles = (root, subtitle) => {
 };
 
 /**
- * @promise loads Japanese dictionary.
- * @resolve {String} message confirming the dictionary has loaded.
- */
-const kuromojiLoaded = (path = 'dict') =>
-	new Promise((resolve, reject) => {
-		kuromoji
-			.builder({ dicPath: chrome.extension.getURL(path) })
-			.build((err, _tokenizer) => {
-				tokenizer = _tokenizer;
-				resolve('loaded');
-			});
-	});
-
-/**
  * @param {String} selected text
  * @return {String} marked up selected text from kuromoji's tokenizer.
  */
@@ -111,3 +79,9 @@ const videoCurrTime = (element = videoPlayerElement) =>
 videoPlayerElement.onplay = () => {
 	showSubtitles(subtitleElement, subtitle_in_timeLapse(_json, videoCurrTime()));
 };
+
+p.get_json_object()
+	.then(json => {
+		_json = json;
+	})
+	.catch(err => console.log(err));
