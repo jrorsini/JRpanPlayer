@@ -1,0 +1,65 @@
+.verb-gloss {
+	color: #4dd0e1;
+}
+
+.noun-gloss {
+	color: #8958dd;
+}
+
+.suffix-gloss {
+	color: #003a69;
+}
+
+.prefix-gloss {
+	color: #7600ad;
+}
+
+.adverb-gloss {
+	color: #fdd835;
+}
+
+.general-gloss {
+	color: #757575;
+}
+
+.adjective-gloss {
+	color: #43a047;
+}
+
+.particle-gloss {
+	color: rgb(175, 37, 106);
+}
+
+.i-adjective-gloss {
+	color: #fb8c00;
+}
+
+.conjuction-gloss {
+	color: #e65100;
+}
+
+.abdominalAdj-gloss {
+	color: red;
+}
+
+.interjection-gloss {
+	color: #f48fb1;
+}
+
+.auxiliaryVerb-gloss {
+	color: #4db6ac;
+}
+
+.katakana-gloss {
+	font-weight: bold;
+	color: #274055;
+}
+
+.jrpan-selection .jrpan-gloss-tag:hover {
+	text-decoration: underline;
+}
+
+.jrpan-gloss-tag {
+	display: inline-block;
+	cursor: pointer;
+}

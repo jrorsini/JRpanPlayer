@@ -20,6 +20,7 @@
 		"concurrently": "^3.5.1",
 		"cors": "^2.8.4",
 		"formidable": "^1.2.1",
+		"kuromoji": "^0.1.2",
 		"react": "^16.3.1",
 		"react-dom": "^16.3.1",
 		"subtitles-parser": "0.0.2",
