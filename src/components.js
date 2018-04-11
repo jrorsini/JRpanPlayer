@@ -9,7 +9,7 @@ export default class VideoPlayer extends React.Component {
 	render() {
 		return (
 			<div className="col s8 offset-s2">
-				<video src="videos/sample.mp4" controls />
+				<video id="videoPlayer" src="videos/sample.mp4" controls />
 			</div>
 		);
 	}
