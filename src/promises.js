@@ -26,7 +26,7 @@ const kuromojiLoaded = (path = 'dict') =>
 		});
 	});
 
-  module.exports = {
-    get_json_object,
-    kuromojiLoaded
-  }
+module.exports = {
+	get_json_object,
+	kuromojiLoaded
+};
