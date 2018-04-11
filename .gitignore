@@ -1,3 +1,5 @@
+/dist/videos/
+/dist/subtls/
 # Logs
 logs
 *.log
