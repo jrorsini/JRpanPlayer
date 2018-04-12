@@ -34,6 +34,19 @@ const subtitle_in_timeLapse = (json, currTime) => {
 const currentSubtitle = subtitleTag => subtitleTag.innerText;
 
 /**
+ * @param {Object} word's object
+ * @return {String} Marked up word
+ */
+const generateMarkup = word =>
+	hasjapaneseCharacter(word.surface_form)
+		? isKatakana(word.surface_form)
+			? `<div class="jrpan-gloss-tag katakana-gloss">${word.surface_form}</div>`
+			: `<div class="jrpan-gloss-tag ${part_of_speech[word.pos]}-gloss">${
+					word.surface_form
+			  }</div>`
+		: `<div class="jrpan-gloss-tag">${word.surface_form}</div>`;
+
+/**
  * @param {Object} root element to set text in.
  * @param {String} subtitle to put into tag element.
  * @function set inner html to subtitle.
@@ -46,7 +59,9 @@ const showSubtitles = (root, subtitle) => {
 				e =>
 					e.surface_form === '\n'
 						? `<br/>`
-						: `<span class="">${e.surface_form}</span>`
+						: `<span class="jrpan-gloss-tag ${part_of_speech[e.pos]}-gloss">${
+								e.surface_form
+						  }</span>`
 			)
 			.join('');
 };
@@ -56,6 +71,37 @@ const showSubtitles = (root, subtitle) => {
  * @return {Number} current time.
  */
 const videoCurrTime = element => Math.round(element.currentTime * 1000);
+
+/*
+|--------------------------------------------------------------------------
+| Functions that check input type.
+|--------------------------------------------------------------------------
+|
+*/
+
+/**
+ * @param {String} Selection.
+ * @return {Boolean} contains any Japanese character.
+ */
+const isSelectable = selection =>
+	selection.trim() !== '' &&
+	selection.match(/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/g) !== null;
+
+/**
+ * @param {String} word
+ * @return {Boolean} if the word is only made out of Katakana.
+ */
+const isKatakana = word =>
+	word.match(/[\u30A0-\u30FF]/g)
+		? word.match(/[\u30A0-\u30FF]/g).length === word.length
+		: false;
+
+/**
+ * @param {String} word
+ * @return {Boolean} if the word is only made out of Katakana.
+ */
+const hasjapaneseCharacter = word =>
+	word.match(/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/g) ? true : false;
 
 module.exports = {
 	subtitle_in_timeLapse,

@@ -65,11 +65,11 @@
 	color: #274055;
 }
 
-.jrpan-selection .jrpan-gloss-tag:hover {
-	text-decoration: underline;
-}
-
 .jrpan-gloss-tag {
 	display: inline-block;
 	cursor: pointer;
+}
+
+.jrpan-gloss-tag:hover {
+	text-decoration: underline;
 }
