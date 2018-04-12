@@ -1,3 +1,5 @@
+import kuromoji from 'kuromoji';
+
 /**
  * @promise loads subtitles.
  * @resolve {Array} subtitles JSON.
@@ -21,8 +23,7 @@ const get_json_object = () =>
 const kuromojiLoaded = (path = 'dict') =>
 	new Promise((resolve, reject) => {
 		kuromoji.builder({ dicPath: path }).build((err, _tokenizer) => {
-			tokenizer = _tokenizer;
-			resolve('loaded');
+			resolve(_tokenizer);
 		});
 	});
 

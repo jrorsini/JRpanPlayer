@@ -13,7 +13,7 @@ import p from './promises.js';
 import f from './functions.js';
 
 let _json = null;
-let tokenizer = null;
+let k = null;
 const part_of_speech = {
 	名詞: 'noun',
 	動詞: 'verb',
@@ -33,12 +33,21 @@ const part_of_speech = {
 const videoPlayerElement = document.getElementById('videoPlayer');
 const subtitleElement = document.getElementById('subtitle');
 
-videoPlayerElement.onplay = () => {
-	f.showSubtitles(
-		subtitleElement,
-		f.subtitle_in_timeLapse(_json, f.videoCurrTime())
-	);
-};
+p.kuromojiLoaded().then(_tokenizer => {
+	k = _tokenizer;
+	console.log(k);
+
+	videoPlayerElement.onplay = () => {
+		setInterval(() => {
+			f.showSubtitles(
+				subtitleElement,
+				k.tokenizeForSentence(
+					f.subtitle_in_timeLapse(_json, f.videoCurrTime(videoPlayerElement))
+				)
+			);
+		}, 100);
+	};
+});
 
 p
 	.get_json_object()

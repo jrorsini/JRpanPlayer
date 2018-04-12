@@ -1,3 +1,9 @@
+#videoPlayer {
+	position: relative;
+	left: 50%;
+	margin-left: -320px;
+}
+
 .verb-gloss {
 	color: #4dd0e1;
 }

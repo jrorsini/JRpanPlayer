@@ -17,7 +17,13 @@ const subtitle_in_timeLapse = (json, currTime) => {
  */
 const showSubtitles = (root, subtitle) => {
 	console.log(subtitle);
-	root.innerHTML = subtitle;
+	root.innerHTML =
+		subtitle
+			.map(
+				e =>
+					e.surface_form === '\n' ? `<br/>` : `<span>${e.surface_form}</span>`
+			)
+			.join('') || '';
 };
 
 /**
@@ -39,8 +45,7 @@ const kuromojiMarkup = selection => {
  * @param {Object} element vidoe element.
  * @return {Number} current time.
  */
-const videoCurrTime = (element = videoPlayerElement) =>
-	Math.round(element.currentTime * 1000);
+const videoCurrTime = element => Math.round(element.currentTime * 1000);
 
 module.exports = {
 	subtitle_in_timeLapse,
