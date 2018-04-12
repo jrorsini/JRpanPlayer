@@ -53,18 +53,49 @@ const generateMarkup = word =>
  */
 const showSubtitles = (root, subtitle) => {
 	console.log(subtitle);
-	if (subtitle)
+	if (subtitle) {
 		root.innerHTML = subtitle
-			.map(
-				e =>
-					e.surface_form === '\n'
-						? `<br/>`
-						: `<span class="jrpan-gloss-tag ${part_of_speech[e.pos]}-gloss">${
-								e.surface_form
-						  }</span>`
-			)
+			.map(e => (e.surface_form === '\n' ? `<br/>` : generateMarkup(e)))
 			.join('');
+		Object.values(document.getElementsByClassName('jrpan-gloss-tag')).map(
+			tagEl => {
+				tagEl.addEventListener('click', e => {
+					getTranslation(e.target.innerHTML);
+				});
+			}
+		);
+	}
 };
+
+/**
+ * @param {string} word
+ * @promise Get translation information from word.
+ * @resolve {object} data from word passed in param.
+ * @reject {object} in case of failure reaching out to the API
+ */
+const getTranslation = word =>
+	new Promise((resolve, reject) => {
+		const xhr = new XMLHttpRequest();
+		xhr.open('GET', `https://jisho.org/api/v1/search/words?keyword=${word}/`);
+		xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+		xhr.withCredentials = false;
+		xhr.setRequestHeader('Accept', 'application/json');
+		xhr.send();
+		xhr.onreadystatechange = () => {
+			if (xhr.readyState === 4 && xhr.status == 200) {
+				const dataTemp = JSON.parse(xhr.responseText)['data'].filter(
+					e => e['is_common']
+				);
+				const res = JSON.parse(xhr.responseText)['data']
+					? JSON.parse(xhr.responseText)['data'][0]
+					: 'nothing found';
+				console.log(res);
+				resolve(res);
+			} else if (xhr.status !== 200) {
+				reject(xhr.responseText);
+			}
+		};
+	});
 
 /**
  * @param {Object} element vidoe element.
