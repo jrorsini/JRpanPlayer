@@ -1,3 +1,19 @@
+const part_of_speech = {
+	名詞: 'noun',
+	動詞: 'verb',
+	記号: 'symbol',
+	副詞: 'adverb',
+	助詞: 'particle',
+	接尾: 'suffix',
+	助動詞: 'auxiliaryVerb',
+	接頭詞: 'prefix',
+	接続詞: 'conjuction',
+	形容詞: 'i-adjective',
+	連体詞: 'abdominalAdj',
+	感動詞: 'interjection',
+	フィラー: 'filler'
+};
+
 /**
  * @param {Array} json subtitles list
  * @param {Number} currTime video's current time
@@ -8,7 +24,14 @@ const subtitle_in_timeLapse = (json, currTime) => {
 		const e = json[i];
 		if (e.startTime < currTime && e.endTime > currTime) return e.text;
 	}
+	return false;
 };
+
+/**
+ * @param {Object} subtitleTag to dig into
+ * @return {String} the subtitles into p tag
+ */
+const currentSubtitle = subtitleTag => subtitleTag.innerText;
 
 /**
  * @param {Object} root element to set text in.
@@ -17,28 +40,15 @@ const subtitle_in_timeLapse = (json, currTime) => {
  */
 const showSubtitles = (root, subtitle) => {
 	console.log(subtitle);
-	root.innerHTML =
-		subtitle
+	if (subtitle)
+		root.innerHTML = subtitle
 			.map(
 				e =>
-					e.surface_form === '\n' ? `<br/>` : `<span>${e.surface_form}</span>`
+					e.surface_form === '\n'
+						? `<br/>`
+						: `<span class="">${e.surface_form}</span>`
 			)
-			.join('') || '';
-};
-
-/**
- * @param {String} selected text
- * @return {String} marked up selected text from kuromoji's tokenizer.
- */
-const kuromojiMarkup = selection => {
-	let path = tokenizer.tokenizeForSentence(selection);
-	console.log(path);
-	path.map(e => {
-		if (part_of_speech[e.pos] === undefined) {
-			console.log(e.pos);
-		}
-	});
-	return path.map(generateMarkup).join('');
+			.join('');
 };
 
 /**
@@ -50,6 +60,6 @@ const videoCurrTime = element => Math.round(element.currentTime * 1000);
 module.exports = {
 	subtitle_in_timeLapse,
 	showSubtitles,
-	kuromojiMarkup,
-	videoCurrTime
+	videoCurrTime,
+	currentSubtitle
 };
