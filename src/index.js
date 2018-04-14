@@ -2,6 +2,7 @@
 /**
  * x Make a more readable font.
  * x Save video time when leaving off.
+ * x remove underline effect on spaces.
  */
 // DONE
 /**
