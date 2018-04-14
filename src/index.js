@@ -1,10 +1,12 @@
 // TODO
 /**
- * x Show subtitles.
+ * x Make a more readable font.
+ * x Save video time when leaving off.
  */
 // DONE
 /**
  * o/ get JSON array.
+ * o/ Show subtitles.
  */
 
 import React from 'react';
