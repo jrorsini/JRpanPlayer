@@ -30,6 +30,10 @@ p.kuromojiLoaded().then(_tokenizer => {
 	videoPlaying = true;
 
 	document.addEventListener('keydown', e => {
+		console.log(e);
+		if (e.keyCode === 91) {
+			videoPlayerElement.pause();
+		}
 		if (e.code === 'Space' && e.keyCode === 32 && videoPlaying) {
 			videoPlayerElement.pause();
 			videoPlaying = false;
