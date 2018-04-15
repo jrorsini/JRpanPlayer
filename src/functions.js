@@ -52,7 +52,6 @@ const generateMarkup = word =>
  * @function set inner html to subtitle.
  */
 const showSubtitles = (root, subtitle) => {
-	console.log(subtitle);
 	if (subtitle) {
 		root.innerHTML = subtitle
 			.map(e => (e.surface_form === '\n' ? `<br/>` : generateMarkup(e)))

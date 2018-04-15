@@ -23,6 +23,18 @@ const subtitleElement = document.getElementById('subtitle');
 
 p.kuromojiLoaded().then(_tokenizer => {
 	k = _tokenizer;
+
+	console.log(localStorage.currentTime);
+
+	if (localStorage.currentTime) {
+		videoPlayerElement.currentTime = localStorage.currentTime;
+	}
+
+	videoPlayerElement.onplay = () => {
+		console.log(f.videoCurrTime(videoPlayerElement));
+		localStorage.currentTime = f.videoCurrTime(videoPlayerElement);
+	};
+
 	videoPlayerElement.onplay = () => {
 		setInterval(() => {
 			if (
