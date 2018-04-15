@@ -1,13 +1,14 @@
 // TODO
 /**
- * x Make a more readable font.
- * x Save video time when leaving off.
+ * x pause and play video with space
  * x remove underline effect on spaces.
  */
 // DONE
 /**
  * o/ get JSON array.
  * o/ Show subtitles.
+ * o/ Save video time when leaving off.
+ * o/ Make a more readable font.
  */
 
 import React from 'react';
@@ -24,13 +25,14 @@ const subtitleElement = document.getElementById('subtitle');
 p.kuromojiLoaded().then(_tokenizer => {
 	k = _tokenizer;
 
+	videoPlayerElement.play();
+
 	videoPlayerElement.onplay = () => {
 		if (localStorage.currentTime) {
 			videoPlayerElement.currentTime = localStorage.currentTime;
 		}
 		setInterval(() => {
 			localStorage.currentTime = videoPlayerElement.currentTime;
-			console.log(videoPlayerElement.currentTime);
 			if (
 				f.currentSubtitle(subtitleElement) !==
 				f.subtitle_in_timeLapse(_json, f.videoCurrTime(videoPlayerElement))
