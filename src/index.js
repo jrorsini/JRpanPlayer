@@ -17,6 +17,7 @@ import p from './promises.js';
 import f from './functions.js';
 
 let _json = null;
+let videoPlaying = false;
 let k = null;
 
 const videoPlayerElement = document.getElementById('videoPlayer');
@@ -26,6 +27,17 @@ p.kuromojiLoaded().then(_tokenizer => {
 	k = _tokenizer;
 
 	videoPlayerElement.play();
+	videoPlaying = true;
+
+	document.addEventListener('keydown', e => {
+		if (e.code === 'Space' && e.keyCode === 32 && videoPlaying) {
+			videoPlayerElement.pause();
+			videoPlaying = false;
+		} else {
+			videoPlayerElement.play();
+			videoPlaying = true;
+		}
+	});
 
 	videoPlayerElement.onplay = () => {
 		if (localStorage.currentTime) {

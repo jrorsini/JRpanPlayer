@@ -59,6 +59,7 @@ const showSubtitles = (root, subtitle) => {
 		Object.values(document.getElementsByClassName('jrpan-gloss-tag')).map(
 			tagEl => {
 				tagEl.addEventListener('click', e => {
+					document.getElementById('videoPlayer').pause();
 					console.log(e.target.innerHTML);
 				});
 			}
