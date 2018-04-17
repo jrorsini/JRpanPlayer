@@ -35,36 +35,16 @@ const videoPlayPauseHandle = e => {
 		videoPlayerElement.play();
 		videoPlaying = true;
 	}
+	e.preventDefault();
+	return false;
 };
-
-/**
- * @param {string} word
- * @promise Get translation information from word.
- * @resolve {object} data from word passed in param.
- * @reject {object} in case of failure reaching out to the API
- */
-const getTranslation = word =>
-	new Promise((resolve, reject) => {
-		const xhr = new XMLHttpRequest();
-		xhr.open('GET', `https://jrpanapi.herokuapp.com/meaning/${word}/`);
-		xhr.setRequestHeader('Accept', 'application/json');
-		xhr.send();
-		xhr.onreadystatechange = () => {
-			if (xhr.readyState === 4) {
-				console.log(JSON.parse(xhr.responseText));
-				resolve(JSON.parse(xhr.responseText));
-			} else if (xhr.status !== 200) {
-				reject(JSON.parse(xhr.responseText));
-			}
-		};
-	});
 
 p.kuromojiLoaded().then(_tokenizer => {
 	k = _tokenizer;
 	videoPlayerElement.play();
 	videoPlaying = true;
 
-	document.addEventListener('keydown', videoPlayPauseHandle);
+	document.addEventListener('keypress', videoPlayPauseHandle);
 
 	videoPlayerElement.onplay = () => {
 		if (localStorage.currentTime) {
