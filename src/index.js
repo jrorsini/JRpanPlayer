@@ -23,25 +23,27 @@ let k = null;
 const videoPlayerElement = document.getElementById('videoPlayer');
 const subtitleElement = document.getElementById('subtitle');
 
+const videoPlayPauseHandle = e => {
+	console.log(e);
+	if (e.keyCode === 91 || e.key === 'Meta') {
+		videoPlayerElement.pause();
+	}
+	if (e.code === 'Space' && e.keyCode === 32 && videoPlaying) {
+		videoPlayerElement.pause();
+		videoPlaying = false;
+	} else {
+		videoPlayerElement.play();
+		videoPlaying = true;
+	}
+};
+
 p.kuromojiLoaded().then(_tokenizer => {
 	k = _tokenizer;
 
 	videoPlayerElement.play();
 	videoPlaying = true;
 
-	document.addEventListener('keydown', e => {
-		console.log(e);
-		if (e.keyCode === 91) {
-			videoPlayerElement.pause();
-		}
-		if (e.code === 'Space' && e.keyCode === 32 && videoPlaying) {
-			videoPlayerElement.pause();
-			videoPlaying = false;
-		} else {
-			videoPlayerElement.play();
-			videoPlaying = true;
-		}
-	});
+	document.addEventListener('keydown', videoPlayPauseHandle);
 
 	videoPlayerElement.onplay = () => {
 		if (localStorage.currentTime) {
