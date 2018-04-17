@@ -60,7 +60,8 @@ const showSubtitles = (root, subtitle) => {
 			tagEl => {
 				tagEl.addEventListener('click', e => {
 					document.getElementById('videoPlayer').pause();
-					console.log(e.target.innerHTML);
+					// console.log(e.target.innerHTML);
+					getTranslation(e.target.innerHTML);
 				});
 			}
 		);
