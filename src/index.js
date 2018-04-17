@@ -27,8 +27,7 @@ const videoPlayPauseHandle = e => {
 	console.log(e);
 	if (e.keyCode === 91 || e.key === 'Meta') {
 		videoPlayerElement.pause();
-	}
-	if (e.code === 'Space' && e.keyCode === 32 && videoPlaying) {
+	} else if (e.code === 'Space' && e.keyCode === 32 && videoPlaying) {
 		videoPlayerElement.pause();
 		videoPlaying = false;
 	} else {
