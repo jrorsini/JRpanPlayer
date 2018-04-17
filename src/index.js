@@ -2,6 +2,7 @@
 /**
  * x pause and play video with space
  * x remove underline effect on spaces.
+ * x -te form and -ta form
  */
 // DONE
 /**
@@ -24,7 +25,6 @@ const videoPlayerElement = document.getElementById('videoPlayer');
 const subtitleElement = document.getElementById('subtitle');
 
 const videoPlayPauseHandle = e => {
-	console.log(e);
 	if (e.keyCode === 91 || e.key === 'Meta') {
 		videoPlayerElement.pause();
 	} else if (e.code === 'Space' && e.keyCode === 32 && videoPlaying) {
