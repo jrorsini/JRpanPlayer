@@ -1,3 +1,5 @@
+import { toRomaji, toHiragana } from 'wanakana'
+
 /**
  * @param {Object} e KeyPress Event.
  * @param {Object} el Video Element.
@@ -28,7 +30,7 @@ const videoKeypressHandler = (e, video, playing) => {
 const wordsClickHandler = (e, video, k, translationHandler) => {
 	video.pause()
 	console.log(k.tokenizeForSentence(e.target.innerHTML)[0].basic_form)
-	console.log(k.tokenizeForSentence(e.target.innerHTML)[0].reading)
+	console.log(toHiragana(k.tokenizeForSentence(e.target.innerHTML)[0].reading))
 	translationHandler(
 		k.tokenizeForSentence(e.target.innerHTML)[0].basic_form
 	).then(res => console.log(res))

@@ -6116,6 +6116,10 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+wanakana@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/wanakana/-/wanakana-3.1.0.tgz#910ca54f921e4e1d3b4e0f56c9002a7579e059e8"
+
 watchpack@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.5.0.tgz#231e783af830a22f8966f65c4c4bacc814072eed"
