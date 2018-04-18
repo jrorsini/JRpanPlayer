@@ -55,7 +55,7 @@ kuromojiLoaded().then(_tokenizer => {
 					k.tokenizeForSentence(
 						subtitle_in_timeLapse(_json, videoCurrTime(videoPlayerElement))
 					),
-					e => wordsClickHandler(e, videoPlayerElement, k)
+					e => wordsClickHandler(e, videoPlayerElement, k, getTranslation)
 				)
 		}, 100)
 	}

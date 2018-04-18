@@ -25,13 +25,13 @@ const videoKeypressHandler = (e, video, playing) => {
  * @param {Object} Kuromoji.
  * @function logs hiragana writting and meaning.
  */
-const wordsClickHandler = (e, video, k) => {
+const wordsClickHandler = (e, video, k, translationHandler) => {
 	video.pause()
 	console.log(k.tokenizeForSentence(e.target.innerHTML)[0].basic_form)
 	console.log(k.tokenizeForSentence(e.target.innerHTML)[0].reading)
-	getTranslation(k.tokenizeForSentence(e.target.innerHTML)[0].basic_form).then(
-		res => console.log(res)
-	)
+	translationHandler(
+		k.tokenizeForSentence(e.target.innerHTML)[0].basic_form
+	).then(res => console.log(res))
 }
 
 module.exports = {
