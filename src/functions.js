@@ -60,15 +60,38 @@ const currentSubtitle = subtitleTag => subtitleTag.innerText;
  * @return {String} Marked up word
  */
 const generateMarkup = (word, index, array) => {
-	console.log(array);
-	return hasjapaneseCharacter(word.surface_form)
-		? isKatakana(word.surface_form)
-			? `<div class="jrpan-gloss-tag katakana-gloss">${word.surface_form}</div>`
-			: `<div class="jrpan-gloss-tag ${part_of_speech[word.pos]}-gloss">${
-					word.surface_form
-			  }</div>`
-		: `<div class="jrpan-gloss-tag">${word.surface_form}</div>`;
+	console.log(word);
+	if (!hasjapaneseCharacter(word.surface_form))
+		return `<div class="jrpan-gloss-tag jrpan-gloss-tag--enable">${
+			word.surface_form
+		}</div>`;
+	if (isKatakana(word.surface_form))
+		return `<div class="jrpan-gloss-tag jrpan-gloss-tag--enable katakana-gloss">${
+			word.surface_form
+		}</div>`;
+	return `<div class="jrpan-gloss-tag jrpan-gloss-tag--enable ${
+		part_of_speech[word.pos]
+	}-gloss ${isProperNoun(word)}">${word.surface_form}</div>`;
+
+	// `<div class="jrpan-gloss-tag jrpan-gloss-tag--enable">${
+	// 		word.surface_form
+	//   }</div>`;
 };
+
+/**
+ * @param {Object} word's object
+ * @return {String} returns class Name to add for proper nouns.
+ */
+const isProperNoun = word =>
+	word.pos_detail_1 === '固有名詞' ? 'jrpan-gloss-tag__proper-noun' : '';
+
+/**
+ * @param {Object} word's object
+ * @return {String} returns class Name to add for symbols.
+ */
+const isSymbol = word =>
+	word.pos_detail_1 === '記号' ? 'jrpan-gloss-tag__symbol' : '';
+
 /**
  * @param {Object} element vidoe element.
  * @return {Number} current time.
