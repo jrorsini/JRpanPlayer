@@ -12,7 +12,7 @@ const part_of_speech = {
 	連体詞: 'abdominalAdj',
 	感動詞: 'interjection',
 	フィラー: 'filler'
-};
+}
 
 /**
  * @param {string} word
@@ -22,19 +22,19 @@ const part_of_speech = {
  */
 const getTranslation = word =>
 	new Promise((resolve, reject) => {
-		const xhr = new XMLHttpRequest();
-		xhr.open('GET', `https://jrpanapi.herokuapp.com/meaning/${word}/`);
-		xhr.setRequestHeader('Accept', 'application/json');
-		xhr.send();
+		const xhr = new XMLHttpRequest()
+		xhr.open('GET', `https://jrpanapi.herokuapp.com/meaning/${word}/`)
+		xhr.setRequestHeader('Accept', 'application/json')
+		xhr.send()
 		xhr.onreadystatechange = () => {
 			if (xhr.readyState === 4) {
-				console.log(JSON.parse(xhr.responseText));
-				resolve(JSON.parse(xhr.responseText));
+				console.log(JSON.parse(xhr.responseText))
+				resolve(JSON.parse(xhr.responseText))
 			} else if (xhr.status !== 200) {
-				reject(JSON.parse(xhr.responseText));
+				reject(JSON.parse(xhr.responseText))
 			}
-		};
-	});
+		}
+	})
 
 /**
  * @param {Array} json subtitles list
@@ -43,17 +43,17 @@ const getTranslation = word =>
  */
 const subtitle_in_timeLapse = (json, currTime) => {
 	for (let i = 0; i < json.length; i++) {
-		const e = json[i];
-		if (e.startTime < currTime && e.endTime > currTime) return e.text;
+		const e = json[i]
+		if (e.startTime < currTime && e.endTime > currTime) return e.text
 	}
-	return false;
-};
+	return false
+}
 
 /**
  * @param {Object} subtitleTag to dig into
  * @return {String} the subtitles into p tag
  */
-const currentSubtitle = subtitleTag => subtitleTag.innerText;
+const currentSubtitle = subtitleTag => subtitleTag.innerText
 
 /**
  * @param {Object} word's object
@@ -66,35 +66,13 @@ const generateMarkup = word =>
 			: `<div class="jrpan-gloss-tag ${part_of_speech[word.pos]}-gloss">${
 					word.surface_form
 			  }</div>`
-		: `<div class="jrpan-gloss-tag">${word.surface_form}</div>`;
-
-/**
- * @param {Object} root element to set text in.
- * @param {String} subtitle to put into tag element.
- * @function set inner html to subtitle.
- */
-const showSubtitles = (root, subtitle) => {
-	if (subtitle) {
-		root.innerHTML = subtitle
-			.map(e => (e.surface_form === '\n' ? `<br/>` : generateMarkup(e)))
-			.join('');
-		Object.values(document.getElementsByClassName('jrpan-gloss-tag')).map(
-			tagEl => {
-				tagEl.addEventListener('click', e => {
-					document.getElementById('videoPlayer').pause();
-					// console.log(e.target.innerHTML);
-					getTranslation(e.target.innerHTML);
-				});
-			}
-		);
-	}
-};
+		: `<div class="jrpan-gloss-tag">${word.surface_form}</div>`
 
 /**
  * @param {Object} element vidoe element.
  * @return {Number} current time.
  */
-const videoCurrTime = element => Math.round(element.currentTime * 1000);
+const videoCurrTime = element => Math.round(element.currentTime * 1000)
 
 /*
 |--------------------------------------------------------------------------
@@ -109,7 +87,7 @@ const videoCurrTime = element => Math.round(element.currentTime * 1000);
  */
 const isSelectable = selection =>
 	selection.trim() !== '' &&
-	selection.match(/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/g) !== null;
+	selection.match(/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/g) !== null
 
 /**
  * @param {String} word
@@ -118,18 +96,17 @@ const isSelectable = selection =>
 const isKatakana = word =>
 	word.match(/[\u30A0-\u30FF]/g)
 		? word.match(/[\u30A0-\u30FF]/g).length === word.length
-		: false;
+		: false
 
 /**
  * @param {String} word
  * @return {Boolean} if the word is only made out of Katakana.
  */
 const hasjapaneseCharacter = word =>
-	word.match(/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/g) ? true : false;
+	word.match(/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/g) ? true : false
 
 module.exports = {
 	subtitle_in_timeLapse,
-	showSubtitles,
 	videoCurrTime,
 	currentSubtitle
-};
+}
