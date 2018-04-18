@@ -1,7 +1,8 @@
 // TODO
 /**
  * x remove underline effect on spaces.
- * x -te form and -ta form
+ * x -te / -ta / -tai form
+ * x Name to Replace
  */
 // DONE
 /**
@@ -15,6 +16,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { fetchJsonObject, kuromojiLoaded, getTranslation } from './promises.js'
+import { videoKeypressHandler, wordsClickHandler } from './pure-functions.js'
 import {
 	subtitle_in_timeLapse,
 	videoCurrTime,
@@ -29,47 +31,13 @@ let videoPlaying = false
 const videoPlayerElement = document.getElementById('videoPlayer')
 const subtitleElement = document.getElementById('subtitle')
 
-/**
- * @param {Object} Click event object.
- * @function logs hiragana writting and meaning.
- */
-const HandlerWhenClickingWord = e => {
-	document.getElementById('videoPlayer').pause()
-	console.log(k.tokenizeForSentence(e.target.innerHTML)[0].basic_form)
-	console.log(k.tokenizeForSentence(e.target.innerHTML)[0].reading)
-	getTranslation(k.tokenizeForSentence(e.target.innerHTML)[0].basic_form).then(
-		res => console.log(res)
-	)
-}
-
-/**
- * @param {Object} e KeyPress Event.
- * @param {Object} el Video Element.
- * @param {Object} s Video's STATE.
- * @function set inner html to subtitle.
- * @return {Boolean} prevent key event.
- */
-const videoPlayPauseHandle = (e, video, playing) => {
-	if (e.keyCode === 91 || e.key === 'Meta') {
-		video.pause()
-	} else if (e.code === 'Space' && e.keyCode === 32 && playing) {
-		video.pause()
-		return false
-	} else {
-		video.play()
-		return true
-	}
-	e.preventDefault()
-	return false
-}
-
 kuromojiLoaded().then(_tokenizer => {
 	k = _tokenizer
 	videoPlayerElement.play()
 	videoPlaying = true
 
 	document.addEventListener('keypress', e => {
-		videoPlaying = videoPlayPauseHandle(e, videoPlayerElement, videoPlaying)
+		videoPlaying = videoKeypressHandler(e, videoPlayerElement, videoPlaying)
 	})
 
 	videoPlayerElement.onplay = () => {
@@ -87,7 +55,7 @@ kuromojiLoaded().then(_tokenizer => {
 					k.tokenizeForSentence(
 						subtitle_in_timeLapse(_json, videoCurrTime(videoPlayerElement))
 					),
-					HandlerWhenClickingWord
+					e => wordsClickHandler(e, videoPlayerElement, k)
 				)
 		}, 100)
 	}
