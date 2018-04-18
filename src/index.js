@@ -36,8 +36,9 @@ const subtitleElement = document.getElementById('subtitle')
 
 const HandlerWhenClickingWord = e => {
 	document.getElementById('videoPlayer').pause()
-	// console.log(e.target.innerHTML);
-	getTranslation(e.target.innerHTML)
+	console.log(k.tokenizeForSentence(e.target.innerHTML)[0].basic_form)
+	console.log(k.tokenizeForSentence(e.target.innerHTML)[0].reading)
+	getTranslation(k.tokenizeForSentence(e.target.innerHTML)[0].basic_form)
 }
 
 /**
