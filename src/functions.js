@@ -37,6 +37,29 @@ const getTranslation = word =>
 	})
 
 /**
+ * @param {Object} root element to set text in.
+ * @param {String} subtitle to put into tag element.
+ * @param {Function} click event handler.
+ * @function set inner html to subtitle.
+ */
+const showSubtitles = (root, subtitle, handler) => {
+	if (subtitle) {
+		root.innerHTML = subtitle
+			.map(e => (e.surface_form === '\n' ? `<br/>` : generateMarkup(e)))
+			.join('')
+		Object.values(document.getElementsByClassName('jrpan-gloss-tag')).map(
+			tagEl => {
+				tagEl.addEventListener('click', e => {
+					document.getElementById('videoPlayer').pause()
+					// console.log(e.target.innerHTML);
+					getTranslation(e.target.innerHTML)
+				})
+			}
+		)
+	}
+}
+
+/**
  * @param {Array} json subtitles list
  * @param {Number} currTime video's current time
  * @return {String} subtitles in time lapse
@@ -108,5 +131,6 @@ const hasjapaneseCharacter = word =>
 module.exports = {
 	subtitle_in_timeLapse,
 	videoCurrTime,
+	showSubtitles
 	currentSubtitle
 }

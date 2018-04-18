@@ -15,7 +15,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { kuromojiLoaded, fetchJsonObject } from './promises.js'
-import f from './functions.js'
+import {
+	subtitle_in_timeLapse,
+	videoCurrTime,
+	showSubtitles
+	currentSubtitle
+} from './functions.js'
 
 let k = null
 let _json = null
@@ -44,29 +49,6 @@ const videoPlayPauseHandle = e => {
 	return false
 }
 
-/**
- * @param {Object} root element to set text in.
- * @param {String} subtitle to put into tag element.
- * @param {Function} click event handler.
- * @function set inner html to subtitle.
- */
-const showSubtitles = (root, subtitle, handler) => {
-	if (subtitle) {
-		root.innerHTML = subtitle
-			.map(e => (e.surface_form === '\n' ? `<br/>` : generateMarkup(e)))
-			.join('')
-		Object.values(document.getElementsByClassName('jrpan-gloss-tag')).map(
-			tagEl => {
-				tagEl.addEventListener('click', e => {
-					document.getElementById('videoPlayer').pause()
-					// console.log(e.target.innerHTML);
-					getTranslation(e.target.innerHTML)
-				})
-			}
-		)
-	}
-}
-
 kuromojiLoaded().then(_tokenizer => {
 	k = _tokenizer
 	videoPlayerElement.play()
@@ -81,13 +63,13 @@ kuromojiLoaded().then(_tokenizer => {
 		setInterval(() => {
 			localStorage.currentTime = videoPlayerElement.currentTime
 			if (
-				f.currentSubtitle(subtitleElement) !==
-				f.subtitle_in_timeLapse(_json, f.videoCurrTime(videoPlayerElement))
+				currentSubtitle(subtitleElement) !==
+				subtitle_in_timeLapse(_json, videoCurrTime(videoPlayerElement))
 			)
 				showSubtitles(
 					subtitleElement,
 					k.tokenizeForSentence(
-						f.subtitle_in_timeLapse(_json, f.videoCurrTime(videoPlayerElement))
+						subtitle_in_timeLapse(_json, videoCurrTime(videoPlayerElement))
 					)
 				)
 		}, 100)
