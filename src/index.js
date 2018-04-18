@@ -14,7 +14,7 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { kuromojiLoaded, fetchJsonObject, getTranslation } from './promises.js'
+import { fetchJsonObject, kuromojiLoaded, getTranslation } from './promises.js'
 import {
 	subtitle_in_timeLapse,
 	videoCurrTime,
@@ -33,29 +33,31 @@ const subtitleElement = document.getElementById('subtitle')
  * @param {Object} Click event object.
  * @function logs hiragana writting and meaning.
  */
-
 const HandlerWhenClickingWord = e => {
 	document.getElementById('videoPlayer').pause()
 	console.log(k.tokenizeForSentence(e.target.innerHTML)[0].basic_form)
 	console.log(k.tokenizeForSentence(e.target.innerHTML)[0].reading)
-	getTranslation(k.tokenizeForSentence(e.target.innerHTML)[0].basic_form)
+	getTranslation(k.tokenizeForSentence(e.target.innerHTML)[0].basic_form).then(
+		res => console.log(res)
+	)
 }
 
 /**
- * @param {Object} KeyPress Event.
+ * @param {Object} e KeyPress Event.
+ * @param {Object} el Video Element.
+ * @param {Object} s Video's STATE.
  * @function set inner html to subtitle.
  * @return {Boolean} prevent key event.
  */
-
-const videoPlayPauseHandle = e => {
+const videoPlayPauseHandle = (e, el, playing) => {
 	if (e.keyCode === 91 || e.key === 'Meta') {
-		videoPlayerElement.pause()
-	} else if (e.code === 'Space' && e.keyCode === 32 && videoPlaying) {
-		videoPlayerElement.pause()
-		videoPlaying = false
+		el.pause()
+	} else if (e.code === 'Space' && e.keyCode === 32 && playing) {
+		el.pause()
+		return false
 	} else {
-		videoPlayerElement.play()
-		videoPlaying = true
+		el.play()
+		return true
 	}
 	e.preventDefault()
 	return false
@@ -66,7 +68,9 @@ kuromojiLoaded().then(_tokenizer => {
 	videoPlayerElement.play()
 	videoPlaying = true
 
-	document.addEventListener('keypress', videoPlayPauseHandle)
+	document.addEventListener('keypress', e => {
+		videoPlaying = videoPlayPauseHandle(e, videoPlayerElement, videoPlaying)
+	})
 
 	videoPlayerElement.onplay = () => {
 		if (localStorage.currentTime) {

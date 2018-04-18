@@ -14,7 +14,6 @@ const getTranslation = word =>
 		xhr.send()
 		xhr.onreadystatechange = () => {
 			if (xhr.readyState === 4) {
-				console.log(JSON.parse(xhr.responseText))
 				resolve(JSON.parse(xhr.responseText))
 			} else if (xhr.status !== 200) {
 				reject(JSON.parse(xhr.responseText))
