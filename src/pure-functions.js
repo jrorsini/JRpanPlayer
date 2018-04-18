@@ -30,7 +30,20 @@ const videoKeypressHandler = (e, video, playing) => {
 const wordsClickHandler = (e, video, k, translationHandler) => {
 	video.pause()
 	console.log(k.tokenizeForSentence(e.target.innerHTML)[0].basic_form)
-	console.log(toHiragana(k.tokenizeForSentence(e.target.innerHTML)[0].reading))
+	console.log(
+		toHiragana(
+			k.tokenizeForSentence(
+				k.tokenizeForSentence(e.target.innerHTML)[0].basic_form
+			)[0].reading
+		)
+	)
+	console.log(
+		toRomaji(
+			k.tokenizeForSentence(
+				k.tokenizeForSentence(e.target.innerHTML)[0].basic_form
+			)[0].reading
+		)
+	)
 	translationHandler(
 		k.tokenizeForSentence(e.target.innerHTML)[0].basic_form
 	).then(res => console.log(res))

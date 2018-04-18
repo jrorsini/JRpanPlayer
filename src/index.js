@@ -1,7 +1,7 @@
 // TODO
 /**
  * x remove underline effect on spaces.
- * x -te / -ta / -tai form
+ * x -te / -ta / -tai / -tara form
  * x Name to Replace
  */
 // DONE
