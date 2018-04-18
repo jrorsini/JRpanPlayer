@@ -49,14 +49,14 @@ const HandlerWhenClickingWord = e => {
  * @function set inner html to subtitle.
  * @return {Boolean} prevent key event.
  */
-const videoPlayPauseHandle = (e, el, playing) => {
+const videoPlayPauseHandle = (e, video, playing) => {
 	if (e.keyCode === 91 || e.key === 'Meta') {
-		el.pause()
+		video.pause()
 	} else if (e.code === 'Space' && e.keyCode === 32 && playing) {
-		el.pause()
+		video.pause()
 		return false
 	} else {
-		el.play()
+		video.play()
 		return true
 	}
 	e.preventDefault()
