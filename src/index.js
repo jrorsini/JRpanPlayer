@@ -18,7 +18,7 @@ import { kuromojiLoaded, fetchJsonObject } from './promises.js'
 import {
 	subtitle_in_timeLapse,
 	videoCurrTime,
-	showSubtitles
+	showSubtitles,
 	currentSubtitle
 } from './functions.js'
 
@@ -28,6 +28,17 @@ let videoPlaying = false
 
 const videoPlayerElement = document.getElementById('videoPlayer')
 const subtitleElement = document.getElementById('subtitle')
+
+/**
+ * @param {Object} Click event object.
+ * @function logs hiragana writting and meaning.
+ */
+
+const HandlerWhenClickingWord = e => {
+	document.getElementById('videoPlayer').pause()
+	// console.log(e.target.innerHTML);
+	getTranslation(e.target.innerHTML)
+}
 
 /**
  * @param {Object} KeyPress Event.
@@ -70,7 +81,8 @@ kuromojiLoaded().then(_tokenizer => {
 					subtitleElement,
 					k.tokenizeForSentence(
 						subtitle_in_timeLapse(_json, videoCurrTime(videoPlayerElement))
-					)
+					),
+					HandlerWhenClickingWord
 				)
 		}, 100)
 	}

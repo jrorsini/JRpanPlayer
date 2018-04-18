@@ -49,11 +49,7 @@ const showSubtitles = (root, subtitle, handler) => {
 			.join('')
 		Object.values(document.getElementsByClassName('jrpan-gloss-tag')).map(
 			tagEl => {
-				tagEl.addEventListener('click', e => {
-					document.getElementById('videoPlayer').pause()
-					// console.log(e.target.innerHTML);
-					getTranslation(e.target.innerHTML)
-				})
+				tagEl.addEventListener('click', handler)
 			}
 		)
 	}
