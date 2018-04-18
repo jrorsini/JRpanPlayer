@@ -14,7 +14,7 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { kuromojiLoaded, fetchJsonObject } from './promises.js'
+import { kuromojiLoaded, fetchJsonObject, getTranslation } from './promises.js'
 import {
 	subtitle_in_timeLapse,
 	videoCurrTime,

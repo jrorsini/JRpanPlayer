@@ -15,28 +15,6 @@ const part_of_speech = {
 }
 
 /**
- * @param {string} word
- * @promise Get translation information from word.
- * @resolve {object} data from word passed in param.
- * @reject {object} in case of failure reaching out to the API
- */
-const getTranslation = word =>
-	new Promise((resolve, reject) => {
-		const xhr = new XMLHttpRequest()
-		xhr.open('GET', `https://jrpanapi.herokuapp.com/meaning/${word}/`)
-		xhr.setRequestHeader('Accept', 'application/json')
-		xhr.send()
-		xhr.onreadystatechange = () => {
-			if (xhr.readyState === 4) {
-				console.log(JSON.parse(xhr.responseText))
-				resolve(JSON.parse(xhr.responseText))
-			} else if (xhr.status !== 200) {
-				reject(JSON.parse(xhr.responseText))
-			}
-		}
-	})
-
-/**
  * @param {Object} root element to set text in.
  * @param {String} subtitle to put into tag element.
  * @param {Function} click event handler.
@@ -127,6 +105,6 @@ const hasjapaneseCharacter = word =>
 module.exports = {
 	subtitle_in_timeLapse,
 	videoCurrTime,
-	showSubtitles
+	showSubtitles,
 	currentSubtitle
 }

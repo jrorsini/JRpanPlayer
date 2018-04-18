@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
 	entry: './src/index.js',
@@ -7,7 +7,6 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist')
 	},
 	mode: 'development',
-	devtool: 'cheap-module-eval-source-map',
 	devServer: {
 		contentBase: path.join(__dirname, 'dist'),
 		compress: true,
@@ -26,5 +25,6 @@ module.exports = {
 				}
 			}
 		]
-	}
-};
+	},
+	devtool: 'cheap-module-eval-source-map'
+}

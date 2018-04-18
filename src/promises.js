@@ -1,6 +1,28 @@
 import kuromoji from 'kuromoji'
 
 /**
+ * @param {string} word
+ * @promise Get translation information from word.
+ * @resolve {object} data from word passed in param.
+ * @reject {object} in case of failure reaching out to the API
+ */
+const getTranslation = word =>
+	new Promise((resolve, reject) => {
+		const xhr = new XMLHttpRequest()
+		xhr.open('GET', `https://jrpanapi.herokuapp.com/meaning/${word}/`)
+		xhr.setRequestHeader('Accept', 'application/json')
+		xhr.send()
+		xhr.onreadystatechange = () => {
+			if (xhr.readyState === 4) {
+				console.log(JSON.parse(xhr.responseText))
+				resolve(JSON.parse(xhr.responseText))
+			} else if (xhr.status !== 200) {
+				reject(JSON.parse(xhr.responseText))
+			}
+		}
+	})
+
+/**
  * @promise loads subtitles.
  * @resolve {Array} subtitles JSON.
  */
@@ -29,5 +51,6 @@ const kuromojiLoaded = (path = 'dict') =>
 
 module.exports = {
 	fetchJsonObject,
-	kuromojiLoaded
+	kuromojiLoaded,
+	getTranslation
 }
