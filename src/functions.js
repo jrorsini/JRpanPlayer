@@ -12,7 +12,7 @@ const part_of_speech = {
 	連体詞: 'abdominalAdj',
 	感動詞: 'interjection',
 	フィラー: 'filler'
-}
+};
 
 /**
  * @param {Object} root element to set text in.
@@ -23,15 +23,18 @@ const part_of_speech = {
 const showSubtitles = (root, subtitle, handler) => {
 	if (subtitle) {
 		root.innerHTML = subtitle
-			.map(e => (e.surface_form === '\n' ? `<br/>` : generateMarkup(e)))
-			.join('')
+			.map(
+				(e, i, arr) =>
+					e.surface_form === '\n' ? `<br/>` : generateMarkup(e, i, arr)
+			)
+			.join('');
 		Object.values(document.getElementsByClassName('jrpan-gloss-tag')).map(
 			tagEl => {
-				tagEl.addEventListener('click', handler)
+				tagEl.addEventListener('click', handler);
 			}
-		)
+		);
 	}
-}
+};
 
 /**
  * @param {Array} json subtitles list
@@ -40,36 +43,37 @@ const showSubtitles = (root, subtitle, handler) => {
  */
 const subtitle_in_timeLapse = (json, currTime) => {
 	for (let i = 0; i < json.length; i++) {
-		const e = json[i]
-		if (e.startTime < currTime && e.endTime > currTime) return e.text
+		const e = json[i];
+		if (e.startTime < currTime && e.endTime > currTime) return e.text;
 	}
-	return false
-}
+	return false;
+};
 
 /**
  * @param {Object} subtitleTag to dig into
  * @return {String} the subtitles into p tag
  */
-const currentSubtitle = subtitleTag => subtitleTag.innerText
+const currentSubtitle = subtitleTag => subtitleTag.innerText;
 
 /**
  * @param {Object} word's object
  * @return {String} Marked up word
  */
-const generateMarkup = word =>
-	hasjapaneseCharacter(word.surface_form)
+const generateMarkup = (word, index, array) => {
+	console.log(array);
+	return hasjapaneseCharacter(word.surface_form)
 		? isKatakana(word.surface_form)
 			? `<div class="jrpan-gloss-tag katakana-gloss">${word.surface_form}</div>`
 			: `<div class="jrpan-gloss-tag ${part_of_speech[word.pos]}-gloss">${
 					word.surface_form
 			  }</div>`
-		: `<div class="jrpan-gloss-tag">${word.surface_form}</div>`
-
+		: `<div class="jrpan-gloss-tag">${word.surface_form}</div>`;
+};
 /**
  * @param {Object} element vidoe element.
  * @return {Number} current time.
  */
-const videoCurrTime = element => Math.round(element.currentTime * 1000)
+const videoCurrTime = element => Math.round(element.currentTime * 1000);
 
 /*
 |--------------------------------------------------------------------------
@@ -84,7 +88,7 @@ const videoCurrTime = element => Math.round(element.currentTime * 1000)
  */
 const isSelectable = selection =>
 	selection.trim() !== '' &&
-	selection.match(/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/g) !== null
+	selection.match(/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/g) !== null;
 
 /**
  * @param {String} word
@@ -93,18 +97,18 @@ const isSelectable = selection =>
 const isKatakana = word =>
 	word.match(/[\u30A0-\u30FF]/g)
 		? word.match(/[\u30A0-\u30FF]/g).length === word.length
-		: false
+		: false;
 
 /**
  * @param {String} word
  * @return {Boolean} if the word is only made out of Katakana.
  */
 const hasjapaneseCharacter = word =>
-	word.match(/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/g) ? true : false
+	word.match(/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/g) ? true : false;
 
 module.exports = {
 	subtitle_in_timeLapse,
 	videoCurrTime,
 	showSubtitles,
 	currentSubtitle
-}
+};
