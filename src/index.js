@@ -1,6 +1,6 @@
 // TODO
 /**
- * Handling cases where subtitles are generated.
+ * x Handling cases where subtitles are generated.
  * x left and right arrow
  */
 // DONE
@@ -15,55 +15,55 @@
  * o/ People's name handler
  */
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { fetchJsonObject, kuromojiLoaded, getTranslation } from './promises.js'
-import { videoKeypressHandler, wordsClickHandler } from './pure-functions.js'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { fetchJsonObject, kuromojiLoaded, getTranslation } from './promises.js';
+import { videoKeypressHandler, wordsClickHandler } from './pure-functions.js';
 import {
 	subtitle_in_timeLapse,
 	videoCurrTime,
 	showSubtitles,
 	currentSubtitle
-} from './functions.js'
+} from './functions.js';
 
-let k = null
-let _json = null
-let videoPlaying = false
+let k = null;
+let _json = null;
+let videoPlaying = false;
 
-const videoPlayerElement = document.getElementById('videoPlayer')
-const subtitleElement = document.getElementById('subtitle')
+const videoPlayerElement = document.getElementById('videoPlayer');
+const subtitleElement = document.getElementById('subtitle');
 
 kuromojiLoaded().then(_tokenizer => {
-	k = _tokenizer
-	videoPlayerElement.play()
-	videoPlaying = true
+	k = _tokenizer;
+	videoPlayerElement.play();
+	videoPlaying = true;
 
 	document.addEventListener('keypress', e => {
-		videoPlaying = videoKeypressHandler(e, videoPlayerElement, videoPlaying)
-	})
+		videoPlaying = videoKeypressHandler(e, videoPlayerElement, videoPlaying);
+	});
 
 	videoPlayerElement.onplay = () => {
 		if (localStorage.currentTime) {
-			videoPlayerElement.currentTime = localStorage.currentTime
+			videoPlayerElement.currentTime = localStorage.currentTime;
 		}
 		setInterval(() => {
 			const subtls = subtitle_in_timeLapse(
 				_json,
 				videoCurrTime(videoPlayerElement)
-			)
-			localStorage.currentTime = videoPlayerElement.currentTime
+			);
+			localStorage.currentTime = videoPlayerElement.currentTime;
 			if (currentSubtitle(subtitleElement) !== subtls)
 				showSubtitles(subtitleElement, k.tokenizeForSentence(subtls), e =>
 					wordsClickHandler(e, videoPlayerElement, k, getTranslation)
-				)
-		}, 100)
-	}
-})
+				);
+		}, 100);
+	};
+});
 
-getTranslation('時間').then(res => console.log(res))
+getTranslation('時間').then(res => console.log(res));
 
 fetchJsonObject()
 	.then(json => {
-		_json = json
+		_json = json;
 	})
-	.catch(err => console.log(err))
+	.catch(err => console.log(err));
