@@ -1,11 +1,12 @@
 // TODO
 /**
- * x -te / -ta / -tai / -tara / -u  form
+ * Handling cases where subtitles are generated.
  * x left and right arrow
  */
 // DONE
 /**
  * o/ get JSON array.
+ * o/ -te / -ta / -tai / -tara / -u  form
  * o/ pause and play video with space
  * o/ Show subtitles.
  * o/ remove underline effect on spaces.
