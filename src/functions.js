@@ -98,7 +98,6 @@ const showSubtitles = (root, subtitle, handler) => {
 			.join('')
 		Object.values(document.getElementsByClassName('jrpan-gloss-tag')).map(
 			tagEl => {
-				console.log(tagEl)
 				tagEl.addEventListener('click', handler)
 			}
 		)

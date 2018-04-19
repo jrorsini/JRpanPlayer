@@ -20,30 +20,30 @@ const isKatakana = word =>
  * @param {Object} word's object
  * @return {Boolean} returns class Name to add for proper nouns.
  */
-const isProperNoun = word => (word.pos_detail_1 === 'å≈óLñºéå' ? true : false)
+const isProperNoun = word => (word.pos_detail_1 === 'Âõ∫ÊúâÂêçË©û' ? true : false)
 
 /**
  * @param {Object} word's object
  * @return {Boolean} returns class Name to add for symbols.
  */
-const isSymbol = word => (word.pos_detail_1 === 'ãLçÜ' ? true : false)
+const isSymbol = word => (word.pos_detail_1 === 'Ë®òÂè∑' ? true : false)
 
 /**
  * @param {Object} word's object
  * @return {Boolean} returns class Name to add for symbols.
  */
-const isVerb = word => (word.pos === 'ìÆéå' ? true : false)
+const isVerb = word => (word.pos === 'ÂãïË©û' ? true : false)
 
 /**
  * @param {Object} word's object
  * @return {Boolean} returns class Name to add for symbols.
  */
 const isVerbForm = word =>
-	word.surface_form === 'Çƒ' ||
-	word.surface_form === 'ÇΩ' ||
-	word.surface_form === 'Ç§' ||
-	word.surface_form === 'ÇΩÇ¢' ||
-	word.surface_form === 'ÇΩÇÁ'
+	word.surface_form === '„Å¶' ||
+	word.surface_form === '„Åü' ||
+	word.surface_form === '„ÅÜ' ||
+	word.surface_form === '„Åü„ÅÑ' ||
+	word.surface_form === '„Åü„Çâ'
 		? true
 		: false
 
