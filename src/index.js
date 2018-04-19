@@ -60,6 +60,8 @@ kuromojiLoaded().then(_tokenizer => {
 	}
 })
 
+getTranslation('時間').then(res => console.log(res))
+
 fetchJsonObject()
 	.then(json => {
 		_json = json

@@ -8,6 +8,7 @@ import kuromoji from 'kuromoji'
  */
 const getTranslation = word =>
 	new Promise((resolve, reject) => {
+		console.log(word)
 		const xhr = new XMLHttpRequest()
 		xhr.open('GET', `https://jrpanapi.herokuapp.com/meaning/${word}/`)
 		xhr.setRequestHeader('Accept', 'application/json')
