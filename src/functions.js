@@ -31,7 +31,7 @@ const isSelectable = selection =>
 
 /**
  * @param {String} word
- * @return {Boolean} if the word is only made out of Katakana.
+ * @return {Number/Boolean} if the word is only made out of Katakana.
  */
 const isKatakana = word =>
 	word.match(/[\u30A0-\u30FF]/g)
@@ -40,15 +40,34 @@ const isKatakana = word =>
 
 /**
  * @param {Object} word's object
- * @return {String} returns class Name to add for proper nouns.
+ * @return {Boolean} returns class Name to add for proper nouns.
  */
 const isProperNoun = word => (word.pos_detail_1 === '固有名詞' ? true : false)
 
 /**
  * @param {Object} word's object
- * @return {String} returns class Name to add for symbols.
+ * @return {Boolean} returns class Name to add for symbols.
  */
 const isSymbol = word => (word.pos_detail_1 === '記号' ? true : false)
+
+/**
+ * @param {Object} word's object
+ * @return {Boolean} returns class Name to add for symbols.
+ */
+const isVerb = word => (word.pos === '動詞' ? true : false)
+
+/**
+ * @param {Object} word's object
+ * @return {Boolean} returns class Name to add for symbols.
+ */
+const isVerbForm = word =>
+	word === 'て' ||
+	word === 'た' ||
+	word === 'う' ||
+	word === 'たい' ||
+	word === 'たら'
+		? true
+		: false
 
 /**
  * @param {String} word
@@ -62,31 +81,33 @@ const hasjapaneseCharacter = word =>
  * @return {String} Marked up word
  */
 const generateMarkup = (word, index, array) => {
-	switch (true) {
-		case hasjapaneseCharacter(word.surface_form):
-			return `<div class="jrpan-gloss-tag jrpan-gloss-tag--enable ${
-				part_of_speech[word.pos]
-			}-gloss>${word.surface_form}</div>`
-			break
-		case isKatakana(word.surface_form):
-			return `<div class="jrpan-gloss-tag jrpan-gloss-tag--enable katakana-gloss">${
-				word.surface_form
-			}</div>`
-			break
-		case isProperNoun(word):
-			return `<div class="jrpan-gloss-tag jrpan-gloss-tag--enable jrpan-gloss-tag__proper-noun">${
-				word.surface_form
-			}</div>`
-			break
-		case isSymbol(word):
-			return `<div class="jrpan-gloss-tag jrpan-gloss-tag--enable jrpan-gloss-tag__symbol">${
-				word.surface_form
-			}</div>`
-			break
-		default:
-			return `<div class="jrpan-gloss-tag">${word.surface_form}</div>`
-			break
+	console.log(word)
+	if (isKatakana(word.surface_form)) {
+		return `<span class="jrpan-gloss-tag katakana-gloss">${
+			word.surface_form
+		}</span>`
 	}
+	if (isProperNoun(word)) {
+		return `<span class="jrpan-gloss-tag jrpan-gloss-tag__proper-noun">${
+			word.surface_form
+		}</span>`
+	}
+	if (isSymbol(word)) {
+		return `<span class="jrpan-gloss-tag jrpan-gloss-tag__symbol">${
+			word.surface_form
+		}</span>`
+	}
+	if (hasjapaneseCharacter(word.surface_form)) {
+		return `<span class="jrpan-gloss-tag ${part_of_speech[word.pos]}-gloss">${
+			isVerb(word) && isVerbForm(array[index + 1].surface_form)
+				? word.surface_form + array[index + 1].surface_form
+				: isVerbForm(word.surface_form) && isVerb(array[index - 1])
+					? ''
+					: word.surface_form
+		}</span>`
+	}
+
+	return `<span>${word.surface_form}</span>`
 }
 
 /**

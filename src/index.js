@@ -1,8 +1,6 @@
 // TODO
 /**
- * x remove underline effect on spaces.
- * x -te / -ta / -tai / -tara form
- * x People's name to Replace
+ * x -te / -ta / -tai / -tara / -u  form
  * x left and right arrow
  */
 // DONE
@@ -10,8 +8,10 @@
  * o/ get JSON array.
  * o/ pause and play video with space
  * o/ Show subtitles.
+ * o/ remove underline effect on spaces.
  * o/ Save video time when leaving off.
  * o/ Make a more readable font.
+ * o/ People's name handler
  */
 
 import React from 'react'
