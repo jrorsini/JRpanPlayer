@@ -1,3 +1,13 @@
+import {
+	isSelectable,
+	isKatakana,
+	isProperNoun,
+	isSymbol,
+	isVerb,
+	isVerbForm,
+	hasjapaneseCharacter
+} from './kuromoji-form-checker.js'
+
 const part_of_speech = {
 	名詞: 'noun',
 	動詞: 'verb',
@@ -14,74 +24,12 @@ const part_of_speech = {
 	フィラー: 'filler'
 }
 
-/*
-|--------------------------------------------------------------------------
-| Functions that check input type.
-|--------------------------------------------------------------------------
-|
-*/
-
-/**
- * @param {String} Selection.
- * @return {Boolean} contains any Japanese character.
- */
-const isSelectable = selection =>
-	selection.trim() !== '' &&
-	selection.match(/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/g) !== null
-
-/**
- * @param {String} word
- * @return {Number/Boolean} if the word is only made out of Katakana.
- */
-const isKatakana = word =>
-	word.match(/[\u30A0-\u30FF]/g)
-		? word.match(/[\u30A0-\u30FF]/g).length === word.length
-		: false
-
-/**
- * @param {Object} word's object
- * @return {Boolean} returns class Name to add for proper nouns.
- */
-const isProperNoun = word => (word.pos_detail_1 === '固有名詞' ? true : false)
-
-/**
- * @param {Object} word's object
- * @return {Boolean} returns class Name to add for symbols.
- */
-const isSymbol = word => (word.pos_detail_1 === '記号' ? true : false)
-
-/**
- * @param {Object} word's object
- * @return {Boolean} returns class Name to add for symbols.
- */
-const isVerb = word => (word.pos === '動詞' ? true : false)
-
-/**
- * @param {Object} word's object
- * @return {Boolean} returns class Name to add for symbols.
- */
-const isVerbForm = word =>
-	word === 'て' ||
-	word === 'た' ||
-	word === 'う' ||
-	word === 'たい' ||
-	word === 'たら'
-		? true
-		: false
-
-/**
- * @param {String} word
- * @return {Boolean} if the word is only made out of Katakana.
- */
-const hasjapaneseCharacter = word =>
-	word.match(/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/g) ? true : false
-
 /**
  * @param {Object} word's object
  * @return {String} Marked up word
  */
 const generateMarkup = (word, index, array) => {
-	if (isKatakana(word.surface_form)) {
+	if (isKatakana(word)) {
 		return `<span class="jrpan-gloss-tag katakana-gloss">${
 			word.surface_form
 		}</span>`
@@ -96,11 +44,11 @@ const generateMarkup = (word, index, array) => {
 			word.surface_form
 		}</span>`
 	}
-	if (hasjapaneseCharacter(word.surface_form)) {
+	if (hasjapaneseCharacter(word)) {
 		return `<span class="jrpan-gloss-tag ${part_of_speech[word.pos]}-gloss">${
-			isVerb(word) && isVerbForm(array[index + 1].surface_form)
+			isVerb(word) && isVerbForm(array[index + 1])
 				? word.surface_form + array[index + 1].surface_form
-				: isVerbForm(word.surface_form) && isVerb(array[index - 1])
+				: isVerbForm(word) && isVerb(array[index - 1])
 					? ''
 					: word.surface_form
 		}</span>`
@@ -151,7 +99,7 @@ const showSubtitles = (root, subtitle, handler) => {
 		Object.values(document.getElementsByClassName('jrpan-gloss-tag')).map(
 			tagEl => {
 				console.log(tagEl)
-				tagEl.addEventListener('click', e => handler)
+				tagEl.addEventListener('click', handler)
 			}
 		)
 	}
