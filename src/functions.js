@@ -81,7 +81,6 @@ const hasjapaneseCharacter = word =>
  * @return {String} Marked up word
  */
 const generateMarkup = (word, index, array) => {
-	console.log(word)
 	if (isKatakana(word.surface_form)) {
 		return `<span class="jrpan-gloss-tag katakana-gloss">${
 			word.surface_form
@@ -151,7 +150,8 @@ const showSubtitles = (root, subtitle, handler) => {
 			.join('')
 		Object.values(document.getElementsByClassName('jrpan-gloss-tag')).map(
 			tagEl => {
-				tagEl.addEventListener('click', handler)
+				console.log(tagEl)
+				tagEl.addEventListener('click', e => handler)
 			}
 		)
 	}
