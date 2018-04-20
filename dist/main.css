@@ -1,87 +1,87 @@
 #videoPlayer {
-	position: relative;
-	left: 50%;
-	margin-left: -320px;
+    position: relative;
+    left: 50%;
+    margin-left: -320px;
 }
 
 #subtitle {
-	text-align: center;
-	font-size: 2rem;
-	font-family: sans-serif;
+    text-align: center;
+    font-size: 2rem;
+    font-family: sans-serif;
 }
 
 .verb-gloss {
-	color: #4dd0e1;
+    color: #4dd0e1;
 }
 
 .noun-gloss {
-	color: #8958dd;
+    color: #8958dd;
 }
 
 .suffix-gloss {
-	color: #003a69;
+    color: #003a69;
 }
 
 .prefix-gloss {
-	color: #7600ad;
+    color: #7600ad;
 }
 
 .adverb-gloss {
-	color: #fdd835;
+    color: #fdd835;
 }
 
 .general-gloss {
-	color: #757575;
+    color: #757575;
 }
 
 .adjective-gloss {
-	color: #43a047;
+    color: #43a047;
 }
 
 .particle-gloss {
-	color: rgb(175, 37, 106);
+    color: rgb(175, 37, 106);
 }
 
 .i-adjective-gloss {
-	color: #fb8c00;
+    color: #fb8c00;
 }
 
 .conjuction-gloss {
-	color: #e65100;
+    color: #e65100;
 }
 
 .abdominalAdj-gloss {
-	color: red;
+    color: red;
 }
 
 .interjection-gloss {
-	color: #f48fb1;
+    color: #f48fb1;
 }
 
 .auxiliaryVerb-gloss {
-	color: #4db6ac;
+    color: #4db6ac;
 }
 
 .katakana-gloss {
-	font-weight: bold;
-	color: #274055;
+    font-weight: bold;
+    color: #274055;
 }
 
 #subtitle span {
-	display: inline-block;
-	cursor: default;
+    display: inline-block;
+    cursor: default;
 }
 
-#subtitle span.jrpan-gloss-tag {
-	cursor: pointer;
+#subtitle span.jrpan-tag {
+    cursor: pointer;
 }
 
-.jrpan-gloss-tag:hover {
-	text-decoration: underline;
+.jrpan-tag:hover {
+    text-decoration: underline;
 }
 
-.jrpan-gloss-tag__proper-noun {
-	-webkit-text-fill-color: white;
-	-webkit-text-stroke-width: 1px;
-	-webkit-text-stroke-color: black;
+.jrpan-tag__proper-noun {
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
 }

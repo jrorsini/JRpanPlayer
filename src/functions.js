@@ -23,6 +23,13 @@ const part_of_speech = {
 	感動詞: 'interjection',
 	フィラー: 'filler'
 }
+/**
+ * @param {String} classString as the list of classes
+ * @param {String} content as the word to put in
+ * @return {String} Marked up element.
+ */
+const span = (classString, content) =>
+	`<span class="${classString}">${content}</span>`
 
 /**
  * @param {Object} word's object
@@ -30,31 +37,25 @@ const part_of_speech = {
  */
 const generateMarkup = (word, index, array) => {
 	if (isKatakana(word)) {
-		return `<span class="jrpan-gloss-tag katakana-gloss">${
-			word.surface_form
-		}</span>`
+		return span('jrpan-tag katakana-gloss', word.surface_form)
 	}
 	if (isProperNoun(word)) {
-		return `<span class="jrpan-gloss-tag jrpan-gloss-tag__proper-noun">${
-			word.surface_form
-		}</span>`
+		return span('jrpan-tag jrpan-tag__proper-noun', word.surface_form)
 	}
 	if (isSymbol(word)) {
-		return `<span class="jrpan-gloss-tag jrpan-gloss-tag__symbol">${
-			word.surface_form
-		}</span>`
+		return span('jrpan-tag jrpan-tag__symbol', word.surface_form)
 	}
 	if (hasjapaneseCharacter(word)) {
-		return `<span class="jrpan-gloss-tag ${part_of_speech[word.pos]}-gloss">${
+		return span(
+			`jrpan-tag ${part_of_speech[word.pos]}-gloss`,
 			isVerb(word) && isVerbForm(array[index + 1])
 				? word.surface_form + array[index + 1].surface_form
 				: isVerbForm(word) && isVerb(array[index - 1])
 					? ''
 					: word.surface_form
-		}</span>`
+		)
 	}
-
-	return `<span>${word.surface_form}</span>`
+	return span('', word.surface_form)
 }
 
 /**
@@ -96,11 +97,9 @@ const showSubtitles = (root, subtitle, handler) => {
 					e.surface_form === '\n' ? `<br/>` : generateMarkup(e, i, arr)
 			)
 			.join('')
-		Object.values(document.getElementsByClassName('jrpan-gloss-tag')).map(
-			tagEl => {
-				tagEl.addEventListener('click', handler)
-			}
-		)
+		Object.values(document.getElementsByClassName('jrpan-tag')).map(tagEl => {
+			tagEl.addEventListener('click', handler)
+		})
 	}
 }
 
