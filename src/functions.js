@@ -6,7 +6,7 @@ import {
 	isVerb,
 	isVerbForm,
 	hasjapaneseCharacter
-} from './kuromoji-form-checker.js';
+} from './kuromoji-form-checker.js'
 
 const part_of_speech = {
 	名詞: 'noun',
@@ -22,7 +22,7 @@ const part_of_speech = {
 	連体詞: 'abdominalAdj',
 	感動詞: 'interjection',
 	フィラー: 'filler'
-};
+}
 
 /**
  * @param {Object} word's object
@@ -32,17 +32,17 @@ const generateMarkup = (word, index, array) => {
 	if (isKatakana(word)) {
 		return `<span class="jrpan-gloss-tag katakana-gloss">${
 			word.surface_form
-		}</span>`;
+		}</span>`
 	}
 	if (isProperNoun(word)) {
 		return `<span class="jrpan-gloss-tag jrpan-gloss-tag__proper-noun">${
 			word.surface_form
-		}</span>`;
+		}</span>`
 	}
 	if (isSymbol(word)) {
 		return `<span class="jrpan-gloss-tag jrpan-gloss-tag__symbol">${
 			word.surface_form
-		}</span>`;
+		}</span>`
 	}
 	if (hasjapaneseCharacter(word)) {
 		return `<span class="jrpan-gloss-tag ${part_of_speech[word.pos]}-gloss">${
@@ -51,11 +51,11 @@ const generateMarkup = (word, index, array) => {
 				: isVerbForm(word) && isVerb(array[index - 1])
 					? ''
 					: word.surface_form
-		}</span>`;
+		}</span>`
 	}
 
-	return `<span>${word.surface_form}</span>`;
-};
+	return `<span>${word.surface_form}</span>`
+}
 
 /**
  * @param {Array} json subtitles list
@@ -64,23 +64,23 @@ const generateMarkup = (word, index, array) => {
  */
 const subtitle_in_timeLapse = (json, currTime) => {
 	for (let i = 0; i < json.length; i++) {
-		const e = json[i];
-		if (e.startTime < currTime && e.endTime > currTime) return e.text;
+		const e = json[i]
+		if (e.startTime < currTime && e.endTime > currTime) return e.text
 	}
-	return false;
-};
+	return false
+}
 
 /**
  * @param {Object} subtitleTag to dig into
  * @return {String} the subtitles into p tag
  */
-const currentSubtitle = subtitleTag => subtitleTag.innerText;
+const currentSubtitle = subtitleTag => subtitleTag.innerText
 
 /**
  * @param {Object} element vidoe element.
  * @return {Number} current time.
  */
-const videoCurrTime = element => Math.round(element.currentTime * 1000);
+const videoCurrTime = element => Math.round(element.currentTime * 1000)
 
 /**
  * @param {Object} root element to set text in.
@@ -95,18 +95,18 @@ const showSubtitles = (root, subtitle, handler) => {
 				(e, i, arr) =>
 					e.surface_form === '\n' ? `<br/>` : generateMarkup(e, i, arr)
 			)
-			.join('');
+			.join('')
 		Object.values(document.getElementsByClassName('jrpan-gloss-tag')).map(
 			tagEl => {
-				tagEl.addEventListener('click', handler);
+				tagEl.addEventListener('click', handler)
 			}
-		);
+		)
 	}
-};
+}
 
 module.exports = {
 	subtitle_in_timeLapse,
 	videoCurrTime,
 	showSubtitles,
 	currentSubtitle
-};
+}
