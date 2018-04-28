@@ -2,6 +2,7 @@
 /**
  * x Handling cases where subtitles are generated.
  * x left and right arrow
+ * x Setting up redux.
  */
 // DONE
 /**
