@@ -23,6 +23,7 @@
 		"kuromoji": "^0.1.2",
 		"react": "^16.3.1",
 		"react-dom": "^16.3.1",
+		"redux": "^4.0.0",
 		"subtitles-parser": "0.0.2",
 		"wanakana": "^3.1.0",
 		"webpack": "^4.5.0",
